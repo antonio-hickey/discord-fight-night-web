@@ -30,7 +30,6 @@ model Prediction {
 model Fighter {
   id          String  @id @default(cuid())
   name        String
-  rank        String
   imageUrl    String
   fightId     String  
   fight       Fight   @relation(fields:[fightId], references: [id])
@@ -39,7 +38,10 @@ model Fighter {
 
 model Fight {
   id            String   @id @default(cuid())
-  name          String
+  hash          String
+  winner        String
+  loser         String
+  draw          Boolean
   fighters      Fighter[]
   predictions   Prediction[]
 }
