@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
   // Further reading:
   // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -14,10 +14,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Prediction {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  predictorId String
+  predictor   User     @relation(fields: [predictorId], references: [id])
+  fightId     String
+  fight       Fight    @relation(fields: [fightId], references: [id])
+  fighterId   String   
+  fighter     Fighter  @relation(fields: [fighterId], references: [id]) 
+  outcome     Boolean
+}
+
+model Fighter {
+  id          String  @id @default(cuid())
+  name        String
+  rank        String
+  imageUrl    String
+  fightId     String  
+  fight       Fight   @relation(fields:[fightId], references: [id])
+  predictors  Prediction[]
+}
+
+model Fight {
+  id            String   @id @default(cuid())
+  name          String
+  fighters      Fighter[]
+  predictions   Prediction[]
 }
 
 // Necessary for Next auth
@@ -55,6 +79,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  predictions   Prediction[]
 }
 
 model VerificationToken {
