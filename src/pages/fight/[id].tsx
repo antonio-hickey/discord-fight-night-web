@@ -2,16 +2,20 @@ import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+import { FaDiscord } from "react-icons/fa";
+
 import Background from "../../assets/dfn-background.svg"
 import { trpc } from "../../utils/trpc";
 import Header from "../../components/header";
 import FighterCard from "../../components/fighterCard";
 import Footer from "../../components/footer";
+import { Fighter } from "../../types/main";
 
 const FightPage: NextPage = () => {
+  const {data: session} = useSession()
   const router = useRouter()
   const fight = trpc.fights.getFight.useQuery({
-    fightId: router.query.hash?.toString()
+    fightId: router.query.id?.toString()
   });
 
   return (
@@ -20,21 +24,28 @@ const FightPage: NextPage = () => {
       style={{backgroundImage: 'url(' + Background.src + ')'}}
     >
       <Header />
-      <main className="container mx-auto flex h-full w-full flex-col items-center p-4 justify-between">
-        <h3 className="font-bold px-[10rem] text-[0rem] lg:text-[2rem]">
-          {fight?.data?.name}
-        </h3>
-        <h3 className="mt-3 px-[10rem] text-[1.25rem]">
-          Pick Your Fighter:
-        </h3>
-        <section className="flex flex-col w-full">
-          <div className="mt-[1rem] flex justify-center space-x-10">
-            {fight?.data?.fighters.map((val, idx) => {
-              return <FighterCard fighter={val} key={idx} />
-            })}
-          </div>
-        </section>
-      </main>
+        <main className="container mx-auto flex h-full w-full flex-col items-center p-4">
+          <h3 className="text-[1.25rem]">
+            Pick Your Fighter:
+          </h3>
+          <section className="mt-5 flex flex-col w-full">
+            <div className="flex justify-center space-x-10">
+              {fight?.data?.fighters.map((val: Fighter, idx: number) => {
+                return <FighterCard fighter={val} key={idx} isSignedIn={false} />
+              })}
+            </div>
+          </section>
+          { !session && 
+            <button
+              className="w-1/2 lg:w-1/4 mx-auto rounded-3xl border border-white bg-white/70 mt-10 px-4 py-2 text-xl shadow-lg hover:bg-red-400"
+              onClick={() => signIn("discord")}
+            >
+              <div className="flex items-center justify-center text-zinc-900 duration-300 motion-safe:hover:scale-110">
+                <FaDiscord /> &nbsp; Sign In To Pick
+              </div>
+            </button>
+          }
+        </main>
       <Footer />
     </div>
   );
