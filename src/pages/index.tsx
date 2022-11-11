@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
   return (
     <div 
-      className="relative flex h-screen w-screen flex-col justify-between"
+      className="relative flex h-vh w-vw flex-col justify-between"
       style={{backgroundImage: 'url(' + Background.src + ')'}}
     >
       <Header />
@@ -24,8 +24,7 @@ const Home: NextPage = () => {
               Object.values(fights?.data!).map((val, idx) => {
                 return (
                   <FightCard
-                    name={val.name}
-                    hash={val.hash}
+                    id={val.id}
                     fighters={val.fighters}
                     key={idx}
                   />

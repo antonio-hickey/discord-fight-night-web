@@ -1,11 +1,11 @@
 export type Fighter = {
     name: string,
-    rank: number,
+    rank?: number | undefined,
     imageUrl: string,
+    fightId: string,
 }
 
 export type Fight = {
-    name: string,
-    hash: string,
+    id: string,
     fighters: Fighter[],
 }

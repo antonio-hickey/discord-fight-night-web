@@ -11,7 +11,7 @@ import Footer from "../../components/footer";
 const FightPage: NextPage = () => {
   const router = useRouter()
   const fight = trpc.fights.getFight.useQuery({
-    fightHash: router.query.hash?.toString()
+    fightId: router.query.hash?.toString()
   });
 
   return (

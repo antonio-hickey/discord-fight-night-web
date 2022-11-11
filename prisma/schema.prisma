@@ -38,10 +38,9 @@ model Fighter {
 
 model Fight {
   id            String   @id @default(cuid())
-  hash          String
-  winner        String
-  loser         String
-  draw          Boolean
+  winner        String?
+  loser         String?
+  draw          Boolean?
   fighters      Fighter[]
   predictions   Prediction[]
 }
