@@ -18,7 +18,13 @@ const FightPage: NextPage = () => {
   const [fightId, setFightId] = useState<string | null>(null)
   const [fightData, setFightData] = useState<(Fight & {fighters: Fighter[]; }) | null>(null)
   
-  const fight = trpc.fights.getFight.useQuery({fightId: fightId!}, {enabled: fightId ? true : false}) 
+  const fight = trpc.fights.getFight.useQuery({fightId: fightId ? fightId : ""}, {enabled: fightId ? true : false}) 
+
+  const prediction = trpc.game.getPrediction.useQuery({
+    fightId: fightId,  
+    userId: session?.user?.id
+  }).data
+
 
   useEffect(() => {
     if (router && router.query.id) {
@@ -29,18 +35,7 @@ const FightPage: NextPage = () => {
     }
   }, [router, fight])
 
-  let prediction: string | null = null
-  if (session && session.user && fightId) {
-    const prediction_ = trpc.game.getPrediction.useQuery({
-      fightId: fightId,
-      userId: session.user.id,
-    })
 
-    if (prediction_ && prediction_.data) {
-      prediction = prediction_.data
-    }
-  }
-  
   return (
     <div 
       className="relative flex h-screen w-screen flex-col justify-between"
