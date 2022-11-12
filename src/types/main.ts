@@ -1,4 +1,5 @@
 export type Fighter = {
+    id: string,
     name: string,
     rank?: number | undefined,
     imageUrl: string,
