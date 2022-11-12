@@ -9,15 +9,29 @@ import { trpc } from "../../utils/trpc";
 import Header from "../../components/header";
 import FighterCard from "../../components/fighterCard";
 import Footer from "../../components/footer";
-import { Fighter } from "../../types/main";
+import type { Fighter } from "../../types/main";
 
 const FightPage: NextPage = () => {
   const {data: session} = useSession()
   const router = useRouter()
+  const fightId = router.query.id?.toString()
+
   const fight = trpc.fights.getFight.useQuery({
-    fightId: router.query.id?.toString()
+    fightId: fightId,
   });
 
+  let prediction: string | null = null
+  if (session && session.user && fightId) {
+    const prediction_ = trpc.game.getPrediction.useQuery({
+      fightId: fightId,
+      userId: session.user.id,
+    })
+
+    if (prediction_ && prediction_.data) {
+      prediction = prediction_.data
+    }
+  }
+  
   return (
     <div 
       className="relative flex h-screen w-screen flex-col justify-between"
@@ -31,7 +45,16 @@ const FightPage: NextPage = () => {
           <section className="mt-10 flex flex-col w-full">
             <div className="flex justify-center space-x-10">
               {fight?.data?.fighters.map((val: Fighter, idx: number) => {
-                return <FighterCard fighter={val} key={idx} isSignedIn={session ? true : false} />
+                return  <FighterCard 
+                          fighter={val} 
+                          key={idx} 
+                          userId={
+                            session && session.user ? 
+                              session.user.id
+                              : null
+                          } 
+                          prediction={prediction}
+                        />
               })}
             </div>
           </section>

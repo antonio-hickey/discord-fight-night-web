@@ -15,13 +15,14 @@ export default function FightCard({
       <section className="flex flex-col justify-center rounded border-2 p-6 shadow-xl duration-500 motion-safe:hover:scale-110 bg-[#333333]">
         <div className="flex flex-col justify-center mt-5">
           <div className="flex flex-row">
-            <Image
-              src={fighters[0].imageUrl}
-              width={250}
-              height={250}
-              className="object-cover object-top"
-              alt="fighter-image"
-            ></Image>
+            <div className="relative h-32 w-32">
+              <Image
+                src={fighters[0].imageUrl}
+                fill={true}
+                className="fixed object-cover object-top"
+                alt="fighter-image"
+              ></Image>
+            </div>
             <div className="flex flex-col justify-center">
               {fighters[0].rank && <h3 className="text-sm font-bold">#{fighters[0].rank}</h3>}
               <h3 className="text-sm font-bold">{fighters[0].name}</h3>
@@ -31,13 +32,14 @@ export default function FightCard({
               {fighters[1].rank && <h3 className="text-sm font-bold">#{fighters[1].rank}</h3>}
               <h3 className="text-sm font-bold">{fighters[1].name}</h3>
             </div>
-            <Image
-              src={fighters[1].imageUrl}
-              width={250}
-              height={250}
-              className="object-cover object-top"
-              alt="fighter-image"
-            ></Image>
+            <div className="relative h-32 w-32">
+              <Image
+                src={fighters[1].imageUrl}
+                fill={true}
+                className="fixed object-cover object-top"
+                alt="fighter-image"
+              ></Image>
+            </div>
           </div>
           <button
             className="w-1/2 mx-auto rounded-3xl border border-white bg-white/40 mt-5 px-4 py-2 text-xl shadow-lg hover:bg-red-400"
