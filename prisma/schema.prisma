@@ -24,7 +24,7 @@ model Prediction {
   fight       Fight    @relation(fields: [fightId], references: [id])
   fighterId   String   
   fighter     Fighter  @relation(fields: [fighterId], references: [id]) 
-  outcome     Boolean
+  outcome     Boolean?
 }
 
 model Fighter {
