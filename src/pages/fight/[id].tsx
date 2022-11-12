@@ -31,16 +31,16 @@ const FightPage: NextPage = () => {
           <section className="mt-5 flex flex-col w-full">
             <div className="flex justify-center space-x-10">
               {fight?.data?.fighters.map((val: Fighter, idx: number) => {
-                return <FighterCard fighter={val} key={idx} isSignedIn={false} />
+                return <FighterCard fighter={val} key={idx} isSignedIn={session ? true : false} />
               })}
             </div>
           </section>
           { !session && 
             <button
-              className="w-1/2 lg:w-1/4 mx-auto rounded-3xl border border-white bg-white/70 mt-10 px-4 py-2 text-xl shadow-lg hover:bg-red-400"
+              className="w-1/2 lg:w-1/4 mx-auto rounded-3xl border border-white bg-white/70 mt-10 px-4 py-2 text-xl shadow-lg hover:bg-red-400 duration-300 motion-safe:hover:scale-110"
               onClick={() => signIn("discord")}
             >
-              <div className="flex items-center justify-center text-zinc-900 duration-300 motion-safe:hover:scale-110">
+              <div className="flex items-center justify-center text-zinc-900 duration-75 motion-safe:hover:scale-125 hover:text-white">
                 <FaDiscord /> &nbsp; Sign In To Pick
               </div>
             </button>

@@ -10,6 +10,10 @@ import FightCard from "../components/fightCard";
 
 const Home: NextPage = () => {
   const fights = trpc.fights.getFights.useQuery();
+  
+  if (!fights) {
+    return <></>
+  }
 
   return (
     <div 
@@ -20,8 +24,8 @@ const Home: NextPage = () => {
       <main className="container mx-auto flex h-full w-full flex-col items-center p-4">
         <div className="flex flex-col h-full w-full items-center p-1 justify-between">
           <div className="mt-[1rem] grid gap-3 pt-3 text-center md:grid-cols-2 lg:w-2/3">
-            {fights?.data &&
-              Object.values(fights?.data!).map((val, idx) => {
+            {fights.data &&
+              Object.values(fights.data).map((val, idx) => {
                 return (
                   <FightCard
                     id={val.id}
