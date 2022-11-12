@@ -13,13 +13,13 @@ export const fightsRouter = router({
         include: {
           fighters: true,
         }
-      })
+      });
     }),
 
   getFight: publicProcedure
-    .input(z.object({fightId: z.string().nullish() }).nullish())
+    .input(z.object({fightId: z.string().nullish() }))
     .query(({ input }) => {
-      if (input && input.fightId) {
+      if (input.fightId) {
         return prisma.fight.findUnique({
           where: {
             id: input.fightId,
@@ -27,7 +27,9 @@ export const fightsRouter = router({
           include: {
             fighters: true,
           }
-        })
+        });
+      } else {
+        return null;
       }
     })
 
