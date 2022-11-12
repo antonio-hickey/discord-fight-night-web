@@ -6,7 +6,7 @@ import type { Fighter } from "./../types/main";
 type FighterCardProps = {
   fighter: Fighter
   userId: string | null
-  prediction: string | null
+  prediction: string | null | undefined
 };
 
 export default function FighterCard({ fighter, userId, prediction }: FighterCardProps) {
@@ -36,14 +36,14 @@ export default function FighterCard({ fighter, userId, prediction }: FighterCard
                 )
               ) : userId && (
                 <button
-                  className="w-3/4 mx-auto rounded-3xl border border-white bg-white/40 mt-5 px-4 py-2 text-xl shadow-lg hover:bg-red-400 duration-300 motion-safe:hover:scale-110"
+                  className="w-3/4 mx-auto rounded-3xl border border-white bg-white/40 mt-5 px-4 py-2 text-xl shadow-lg hover:bg-red-400"
                   onClick={() => makePrediction({
                     fighterId: fighter.id,
                     fightId: fighter.fightId,
                     userId: userId, 
                   })}
                 >
-                  <div className="duration-75 motion-safe:hover:scale-125">
+                  <div className="duration-500 motion-safe:hover:scale-125">
                     Pick
                   </div>
                 </button>
