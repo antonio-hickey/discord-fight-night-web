@@ -3,8 +3,8 @@ import { z } from "zod";
 import { prisma } from "../../db/client";
 import { router, publicProcedure } from "../trpc";
 
-import { Fight, Fighter } from "../../../types/main";
-import { PrismaPromise } from "@prisma/client";
+import type { Fight, Fighter } from "../../../types/main";
+import type { PrismaPromise } from "@prisma/client";
 
 export const fightsRouter = router({
   getFights: publicProcedure
