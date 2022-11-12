@@ -34,10 +34,12 @@ export const gameRouter = router({
       }),
   getPrediction: protectedProcedure
     .input(z.object({
-      fightId: z.string(),
-      userId: z.string(),
+      fightId: z.string().nullish(),
+      userId: z.string().nullish(),
     }))
     .query(async ({ ctx, input }): Promise<string | null> => {
+      if (!input.fightId) return null
+      if (!input.userId) return null
       const prediction = await ctx.prisma.prediction.findFirst({
         where: {
           fightId: input.fightId,
