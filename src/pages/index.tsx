@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
   return (
     <div 
-      className="relative flex h-vh w-vw flex-col justify-between"
+      className="relative flex min-h-screen min-w-screen h-full w-full flex-col justify-between"
       style={{backgroundImage: 'url(' + Background.src + ')'}}
     >
       <Header />
