@@ -8,5 +8,6 @@ export type Fighter = {
 
 export type Fight = {
     id: string,
+    started: boolean | null,
     fighters: Fighter[],
 }

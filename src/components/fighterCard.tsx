@@ -8,9 +8,10 @@ type FighterCardProps = {
   userId: string | null
   prediction: string | null | undefined
   predictionMade: (fighterId: string) => void
+  hasFightStarted: boolean | null
 };
 
-export default function FighterCard({ fighter, userId, prediction, predictionMade }: FighterCardProps) {
+export default function FighterCard({ fighter, userId, prediction, predictionMade, hasFightStarted }: FighterCardProps) {
   const { mutate: makePrediction } = trpc.game.makePrediction.useMutation();
 
   return (
@@ -37,7 +38,7 @@ export default function FighterCard({ fighter, userId, prediction, predictionMad
                     Picked
                   </button>
                 )
-              ) : userId && (
+              ) : userId && !hasFightStarted && (
                 <button
                   className="w-3/4 mx-auto rounded-3xl border border-white bg-white/40 mt-5 px-4 py-2 text-xl shadow-lg hover:bg-red-400"
                   onClick={() => {

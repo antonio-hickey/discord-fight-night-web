@@ -55,7 +55,7 @@ const FightPage: NextPage = () => {
     >
       <Header />
         <main className="container mx-auto flex h-full w-full flex-col items-center p-4">
-          {fightData && prediction ? (
+          {fightData ? (
             <>
             <h3 className="-mt-10 text-[1.25rem]">
               Pick Your Fighter:
@@ -73,6 +73,7 @@ const FightPage: NextPage = () => {
                             } 
                             prediction={prediction}
                             predictionMade={predictionMade}
+                            hasFightStarted={fightData.started}
                           />
                 })}
               </div>
@@ -91,7 +92,6 @@ const FightPage: NextPage = () => {
           ): (
             <Loader />
           )}
-     
         </main>
       <Footer />
     </div>
