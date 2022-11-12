@@ -9,16 +9,25 @@ import { trpc } from "../../utils/trpc";
 import Header from "../../components/header";
 import FighterCard from "../../components/fighterCard";
 import Footer from "../../components/footer";
-import type { Fighter } from "../../types/main";
+import type { Fight, Fighter } from "../../types/main";
+import { useEffect, useState } from "react";
 
 const FightPage: NextPage = () => {
-  const {data: session} = useSession()
   const router = useRouter()
-  const fightId = router.query.id?.toString()
+  const {data: session} = useSession()
+  const [fightId, setFightId] = useState<string | null>(null)
+  const [fightData, setFightData] = useState<(Fight & {fighters: Fighter[]; }) | null>(null)
+  
+  const fight = trpc.fights.getFight.useQuery({fightId: fightId!}, {enabled: fightId ? true : false}) 
 
-  const fight = trpc.fights.getFight.useQuery({
-    fightId: fightId,
-  });
+  useEffect(() => {
+    if (router && router.query.id) {
+      setFightId(router.query.id.toString())
+    }
+    if (fight && fight.data) {
+      setFightData(fight.data)
+    }
+  }, [router, fight])
 
   let prediction: string | null = null
   if (session && session.user && fightId) {
@@ -44,7 +53,7 @@ const FightPage: NextPage = () => {
           </h3>
           <section className="mt-10 flex flex-col w-full">
             <div className="flex justify-center space-x-10">
-              {fight?.data?.fighters.map((val: Fighter, idx: number) => {
+              {fightData && fightData.fighters.map((val: Fighter, idx: number) => {
                 return  <FighterCard 
                           fighter={val} 
                           key={idx} 
