@@ -3,11 +3,12 @@ import { z } from "zod";
 import { prisma } from "../../db/client";
 import { router, publicProcedure } from "../trpc";
 
-import { Fight } from "../../../types/main";
+import { Fight, Fighter } from "../../../types/main";
+import { PrismaPromise } from "@prisma/client";
 
 export const fightsRouter = router({
   getFights: publicProcedure
-    .query((): {[key: string]: Fight} => {
+    .query((): PrismaPromise<(Fight & { fighters: Fighter[]; })[]> => {
       return prisma.fight.findMany({
         include: {
           fighters: true,
