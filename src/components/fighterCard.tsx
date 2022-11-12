@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useEffect } from "react";
 
 import { trpc } from "../utils/trpc";
 import type { Fighter } from "./../types/main";
@@ -12,10 +11,6 @@ type FighterCardProps = {
 
 export default function FighterCard({ fighter, userId, prediction }: FighterCardProps) {
   const { mutate: makePrediction } = trpc.game.makePrediction.useMutation();
-
-  useEffect(() => {
-    console.log(prediction)
-  }, [prediction])
 
   return (
     <section className="flex flex-col w-[25rem] justify-center rounded-3xl border-2 p-6 shadow-xl duration-300 motion-safe:hover:scale-110 bg-[#333333]">
