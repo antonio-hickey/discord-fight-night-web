@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useEffect } from "react";
 
 import { trpc } from "../utils/trpc";
 import type { Fighter } from "./../types/main";
